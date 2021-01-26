@@ -1,0 +1,10 @@
+.bklst{
+	float: left;
+	width: 49%;
+}
+.tbl{
+    margin: 0 auto;
+}
+#tblhdr{
+    text-align: center;
+}
