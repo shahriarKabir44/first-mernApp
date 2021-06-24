@@ -1,17 +1,19 @@
 
 import React, { useEffect } from 'react'
+import { detailsModalService } from '../services/bookDetailsModalService'
+import { authorService } from '../services/setCurrentAuthorService'
 
-function BookTd({ setmodal1, name, ID, genre, setCurrentAuthor, setStatus }) {
+function BookTd({ setmodal1, book, setStatus }) {
     const show = () => {
-        setCurrentAuthor(null)
-        setmodal1(false)
+        authorService.setAuthor(null)
+        detailsModalService.toggle(false)
         setStatus(0)
         fetch('http://localhost:4000/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 query: `query {
-                    book(id: "${ID}"){
+                    book(id: "${book.id}"){
                         author{
                             name
                             age
@@ -21,8 +23,8 @@ function BookTd({ setmodal1, name, ID, genre, setCurrentAuthor, setStatus }) {
                 }`
             }),
         }).then(res => res.json()).then(data => {
-            setCurrentAuthor(data.data.book.author)
-            setmodal1(true)
+            authorService.setAuthor(data.data.book.author)
+            detailsModalService.toggle(true)
         })
     }
     useEffect(() => {
@@ -31,9 +33,9 @@ function BookTd({ setmodal1, name, ID, genre, setCurrentAuthor, setStatus }) {
 
     return (
         <tr>
-            <td>{name}</td>
-            <td>{genre}</td>
-            <td> <button onClick={show}>seeauthor</button> </td>
+            <td>{book.name}</td>
+            <td>{book.genre}</td>
+            <td> <button className="btn btn-primary" onClick={show}>seeauthor</button> </td>
         </tr>
     )
 }

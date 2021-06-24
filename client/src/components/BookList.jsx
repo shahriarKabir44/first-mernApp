@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BookTd from './BookTd'
 import './css/booklist.css'
-function BookList({ bookList, setmodal1, setBookList, setStatus, setCurrentAuthor }) {
+function BookList({ bookList, setmodal1, setBookList, setStatus }) {
 
     const [status, setst] = useState(0)
     /**/
@@ -24,7 +24,7 @@ function BookList({ bookList, setmodal1, setBookList, setStatus, setCurrentAutho
             setBookList(data.data.books)
             console.log(bookList)
         })
-    }, [status])
+    }, [])
     return (
 
         < div className="bklst">
@@ -39,7 +39,7 @@ function BookList({ bookList, setmodal1, setBookList, setStatus, setCurrentAutho
                 </thead>
                 <tbody>
                     {bookList.map((bk, index) => {
-                        return <BookTd setmodal1={setmodal1} key={"book" + index} setStatus={setStatus} name={bk.name} setCurrentAuthor={setCurrentAuthor} genre={bk.genre} ID={bk.id} />
+                        return <BookTd setmodal1={setmodal1} key={"book" + index} setStatus={setStatus} book={bk} />
                     })}
                 </tbody>
             </table>

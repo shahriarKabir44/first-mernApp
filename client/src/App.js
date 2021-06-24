@@ -5,6 +5,7 @@ import BookList from './components/BookList';
 //import SeeAuthors from './components/SeeAuthors';
 import AddAuthor from './components/AddAuthor';
 import Modalx from './components/Modalx';
+import { authorService } from './services/setCurrentAuthorService';
 
 function App() {
 	const [modal1Status, setmodal1] = useState(false)
@@ -12,29 +13,29 @@ function App() {
 	const [showStatus, setStatus] = useState(0)
 	const [bookList, setBookList] = useState([])
 	const [currentAuthor, setCurrentAuthor] = useState(null)
-	const [currentStatus, setcurrentStatus] = useState(0)
-	const [atrModal, setAtrModal] = useState(0)
-	const [bookFormModal, setBookmodal] = useState(0)
-	console.log(currentStatus)
+	const [atrModal, setAtrModal] = useState(false)
+	const [bookFormModal, setBookmodal] = useState(false)
+
 	useEffect(() => {
-		setcurrentStatus(0)
-	}, [])
+		authorService.getAuthor().subscribe(x => {
+			setCurrentAuthor(x)
+		})
+	}, [currentAuthor])
 
 	return (
 		<div className="App">
 
 			<div id="forms">
-				<button className="btn btn-primary" onClick={() => { setAtrModal(1) }}>Add Author</button>
-				<button className="btn btn-primary" onClick={() => { setBookmodal(1) }}>AddBook</button>
-				<AddAuthor setcurrentStatus={setcurrentStatus} atrModal={atrModal} setAtrModal={setAtrModal} setAuthors={setAuthors} authorList={authorList} />
-				<Form bookFormModal={bookFormModal} setBookmodal={setBookmodal} setcurrentStatus={setcurrentStatus} className="frm" setAuthors={setAuthors} authorList={authorList} bookList={bookList} setBookList={setBookList} />
+				<button className="btn btn-primary" onClick={() => { setAtrModal(true) }}>Add Author</button>
+				<button className="btn btn-primary" onClick={() => { setBookmodal(true) }}>AddBook</button>
+				<AddAuthor atrModal={atrModal} setAtrModal={setAtrModal} setAuthors={setAuthors} authorList={authorList} />
+				<Form bookFormModal={bookFormModal} setBookmodal={setBookmodal} className="frm" setAuthors={setAuthors} authorList={authorList} bookList={bookList} setBookList={setBookList} />
 
 			</div>
 			<br />
 			<div id="booksPart">
-				<BookList setmodal1={setmodal1} setCurrentAuthor={setCurrentAuthor} setStatus={setStatus} bookList={bookList} setBookList={setBookList} />
-				{/* 	{currentAuthor !== null && < SeeAuthors className="author" showStatus={showStatus} setStatus={setStatus} currentAuthor={currentAuthor} />}
-			*/}
+				<BookList setmodal1={setmodal1} setStatus={setStatus} bookList={bookList} setBookList={setBookList} />
+
 				{currentAuthor !== null && <Modalx setmodal1={setmodal1} modal1Status={modal1Status} showStatus={showStatus} setStatus={setStatus} currentAuthor={currentAuthor} />}
 			</div>
 

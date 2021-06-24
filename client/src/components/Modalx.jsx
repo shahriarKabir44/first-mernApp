@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import AuthorsBooksTable from './AuthorsBooksTable'
 import { Modal } from 'react-bootstrap'
-function Modalx({ modal1Status, currentAuthor, showStatus, setStatus, setmodal1 }) {
+import { detailsModalService } from '../services/bookDetailsModalService'
+
+function Modalx({ currentAuthor, modal1Status, showStatus, setStatus, setmodal1 }) {
     const [buklst, setbuklst] = useState([])
     const [status, setst] = useState(0)
+    const [showStat, setStat] = useState(false)
     const getbook = () => {
         setStatus(1)
         fetch('http://localhost:4000/graphql', {
@@ -25,13 +28,14 @@ function Modalx({ modal1Status, currentAuthor, showStatus, setStatus, setmodal1 
             setst(1)
         })
     }
-
     useEffect(() => {
-
-    }, [status])
+        detailsModalService.getStatus().subscribe(x => {
+            setStat(x)
+        })
+    }, [status, showStat])
     return (
         <div>
-            <Modal show={modal1Status} onHide={() => { setmodal1(0) }}>
+            <Modal show={showStat} onHide={() => { setStat(false); detailsModalService.toggle(false) }}>
                 <Modal.Header>Author details</Modal.Header>
                 <Modal.Body><ul id="atrdtul">
                     <li>name:{currentAuthor.name}</li>

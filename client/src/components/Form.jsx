@@ -3,7 +3,7 @@ import socketIOClient from 'socket.io-client'
 import { Modal } from 'react-bootstrap'
 import './css/form.css'
 
-function Form({ setBookList, setAuthors, authorList, bookList, setcurrentStatus, bookFormModal, setBookmodal }) {
+function Form({ setBookList, setAuthors, authorList, bookList, bookFormModal, setBookmodal }) {
     const socket = socketIOClient('http://localhost:4000')
 
     const [authors, setatrs] = useState('')
@@ -40,7 +40,6 @@ function Form({ setBookList, setAuthors, authorList, bookList, setcurrentStatus,
         e.preventDefault()
         setnm('')
         setgnr('')
-        setcurrentStatus(1)
         fetch('http://localhost:4000/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

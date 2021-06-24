@@ -52,7 +52,7 @@ function AddAuthor({ authorList, setAuthors, atrModal, setAtrModal }) {
         setage('')
     }
     return (
-        <Modal show={atrModal} onHide={() => { setAtrModal(0) }} >
+        <Modal show={atrModal} onHide={() => { setAtrModal(false) }} >
             <Modal.Header><h3 id="addatrlbl">Add Author</h3></Modal.Header>
             <Modal.Body>
 
